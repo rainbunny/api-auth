@@ -37,7 +37,7 @@ const convertToUser = (user: firebaseAdmin.auth.UserRecord): Omit<User, 'id'> =>
     signInType,
     signInId: user.providerData[0].uid,
     externalId: user.uid,
-    lastName: user.displayName,
+    lastName: displayName,
     firstName: undefined,
     displayName,
     email,
