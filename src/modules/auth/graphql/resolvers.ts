@@ -8,11 +8,14 @@ export const resolvers = (container: AwilixContainer): Resolver =>
     Query: {
       users: container.resolve<UserService>('userService').find,
       user: container.resolve<UserService>('userService').getById,
+      emailExists: container.resolve<UserService>('userService').emailExists,
+      usernameExists: container.resolve<UserService>('userService').usernameExists,
     },
     Mutation: {
       users: {
         registerWithToken: container.resolve<UserService>('userService').registerWithToken,
         generateToken: container.resolve<UserService>('userService').generateToken,
+        register: container.resolve<UserService>('userService').register,
       },
     },
   });

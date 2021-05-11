@@ -4,7 +4,7 @@
     "url": "https://github.com/rainbunny/api-auth/issues"
   },
   "dependencies": {
-    "@rainbunny/api-core": "^0.2.4",
+    "@rainbunny/api-core": "^0.2.5",
     "@rainbunny/pg-extensions": "^0.4.0",
     "apollo-server": "^2.23.0",
     "apollo-server-express": "^2.23.0",
