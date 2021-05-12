@@ -2,8 +2,7 @@
 
 Api of auth service.
 
-![npm (scoped)](https://img.shields.io/npm/v/@rainbunny/api-auth)
-![Typed with TypeScript](https://flat.badgen.net/badge/icon/Typed?icon=typescript&label&labelColor=blue&color=555555)
+!![Typed with TypeScript](https://flat.badgen.net/badge/icon/Typed?icon=typescript&label&labelColor=blue&color=555555)
 ![Eslint](https://badgen.net/badge/eslint/airbnb/ff5a5f?icon=airbnb)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
