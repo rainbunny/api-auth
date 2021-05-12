@@ -1,7 +1,7 @@
 {
   "author": "Thinh Tran",
   "bugs": {
-    "url": "https://github.com/rainbunny/api-auth/issues"
+    "url": "https://github.com/rainbunny/auth-api/issues"
   },
   "dependencies": {
     "@rainbunny/api-core": "^0.2.5",
@@ -55,7 +55,7 @@
     "prettier": "^2.1.2",
     "typescript": "^4.0.5"
   },
-  "homepage": "https://github.com/rainbunny/api-auth#readme",
+  "homepage": "https://github.com/rainbunny/auth-api#readme",
   "keywords": [
     "postgres",
     "typescript",
@@ -64,10 +64,10 @@
   ],
   "license": "MIT",
   "main": "dist/index.js",
-  "name": "@rainbunny/api-auth",
+  "name": "@rainbunny/auth-api",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rainbunny/api-auth.git"
+    "url": "git+https://github.com/rainbunny/auth-api.git"
   },
   "scripts": {
     "build": "rm -r -f dist && babel src --out-dir dist --extensions \".ts\" --source-maps inline --copy-files",
