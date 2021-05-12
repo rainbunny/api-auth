@@ -17,21 +17,17 @@ export const buildWhereClause = (filters: {searchTerm: string; username: string;
   return whereClause;
 };
 
-export const find: (dependencies: {database: Database}) => UserReadRepository['find'] = ({database}) => ({
-  searchTerm,
-  username,
-  email,
-  fields,
-  ...other
-}: UserQuery) =>
-  database.executeQuery<User>({
-    table: 'app_user',
-    whereClause: buildWhereClause({searchTerm, username, email}),
-    params: {
-      searchTerm: convertSearchTerm(searchTerm),
-      username,
-      email,
-    },
-    fields: Object.keys(fields),
-    ...other,
-  });
+export const find: (dependencies: {database: Database}) => UserReadRepository['find'] =
+  ({database}) =>
+  ({searchTerm, username, email, fields, ...other}: UserQuery) =>
+    database.executeQuery<User>({
+      table: 'app_user',
+      whereClause: buildWhereClause({searchTerm, username, email}),
+      params: {
+        searchTerm: convertSearchTerm(searchTerm),
+        username,
+        email,
+      },
+      fields: Object.keys(fields),
+      ...other,
+    });

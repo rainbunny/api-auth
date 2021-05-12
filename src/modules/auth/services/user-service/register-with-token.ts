@@ -58,11 +58,13 @@ const createUser = (userData: firebaseAdmin.auth.DecodedIdToken, userWriteReposi
 
 export const registerWithToken: (dependencies: {
   userWriteRepository: UserWriteRepository;
-}) => UserService['registerWithToken'] = ({userWriteRepository}) => (command: RegisterWithTokenCommand) =>
-  validateSchema<RegisterWithTokenCommand>(schema)(command).pipe(
-    switchMap(({token}) => from(firebaseAdmin.auth().verifyIdToken(token))),
-    catchError(() => {
-      throw new ValidationError(INVALID_CREDENTIAL_MESSAGE);
-    }),
-    switchMap((userData) => (userData.id ? of<void>() : createUser(userData, userWriteRepository))),
-  );
+}) => UserService['registerWithToken'] =
+  ({userWriteRepository}) =>
+  (command: RegisterWithTokenCommand) =>
+    validateSchema<RegisterWithTokenCommand>(schema)(command).pipe(
+      switchMap(({token}) => from(firebaseAdmin.auth().verifyIdToken(token))),
+      catchError(() => {
+        throw new ValidationError(INVALID_CREDENTIAL_MESSAGE);
+      }),
+      switchMap((userData) => (userData.id ? of<void>() : createUser(userData, userWriteRepository))),
+    );

@@ -1,6 +1,5 @@
 import type {IResolvers} from 'apollo-server';
 import type {ApolloServerExpressConfig} from 'apollo-server-express';
-
 import firebase from 'firebase/app';
 import {defaults} from 'pg';
 import {asValue, AwilixContainer, createContainer, InjectionMode} from 'awilix';
@@ -80,7 +79,7 @@ export const configureServer = (): {apolloServerConfig: ApolloServerExpressConfi
   return {
     apolloServerConfig: {
       typeDefs: [baseTypeDefs, authTypeDefs],
-      resolvers: (_.mergeAll([baseResolvers(), authResolvers(container)]) as unknown) as IResolvers,
+      resolvers: _.mergeAll([baseResolvers(), authResolvers(container)]) as unknown as IResolvers,
       playground: Boolean(true),
       introspection: Boolean(true),
       context: contextFactory({firebaseApp}),

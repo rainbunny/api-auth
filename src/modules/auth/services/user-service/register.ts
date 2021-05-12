@@ -67,42 +67,44 @@ const createFirebaseUser = (command: RegisterCommand) =>
 export const register: (dependencies: {
   userWriteRepository: UserWriteRepository;
   userReadRepository: UserReadRepository;
-}) => UserService['register'] = ({userWriteRepository, userReadRepository}) => (command: RegisterCommand) =>
-  validateSchema<typeof command>(schema)(command).pipe(
-    switchMap((cmd) =>
-      emailExists({userReadRepository})({email: command.email}, undefined).pipe(
-        map((doesEmailExist) => {
-          if (doesEmailExist) {
-            throw new ValidationError('An account with this email already exists');
-          }
-          return cmd;
-        }),
+}) => UserService['register'] =
+  ({userWriteRepository, userReadRepository}) =>
+  (command: RegisterCommand) =>
+    validateSchema<typeof command>(schema)(command).pipe(
+      switchMap((cmd) =>
+        emailExists({userReadRepository})({email: command.email}, undefined).pipe(
+          map((doesEmailExist) => {
+            if (doesEmailExist) {
+              throw new ValidationError('An account with this email already exists');
+            }
+            return cmd;
+          }),
+        ),
       ),
-    ),
-    switchMap((cmd) =>
-      usernameExists({userReadRepository})({username: command.username}, undefined).pipe(
-        map((doesUsernameExist) => {
-          if (doesUsernameExist) {
-            throw new ValidationError('An account with this username already exists');
-          }
-          return cmd;
-        }),
+      switchMap((cmd) =>
+        usernameExists({userReadRepository})({username: command.username}, undefined).pipe(
+          map((doesUsernameExist) => {
+            if (doesUsernameExist) {
+              throw new ValidationError('An account with this username already exists');
+            }
+            return cmd;
+          }),
+        ),
       ),
-    ),
-    switchMap((cmd) => createFirebaseUser(cmd).pipe(map((tokens) => ({tokens, cmd})))),
-    map(({tokens, cmd}) => ({
-      tokens,
-      user: {
-        signInType: 'EMAIL' as SignInType,
-        signInId: cmd.email,
-        externalId: tokens.uid,
-        lastName: cmd.lastName,
-        firstName: cmd.firstName,
-        displayName: getDisplayName(cmd),
-        email: cmd.email,
-        avatarUrl: undefined,
-        status: 'ACTIVE' as UserStatus,
-      },
-    })),
-    switchMap(({tokens, user}) => userWriteRepository.create(user).pipe(map(() => tokens))),
-  );
+      switchMap((cmd) => createFirebaseUser(cmd).pipe(map((tokens) => ({tokens, cmd})))),
+      map(({tokens, cmd}) => ({
+        tokens,
+        user: {
+          signInType: 'EMAIL' as SignInType,
+          signInId: cmd.email,
+          externalId: tokens.uid,
+          lastName: cmd.lastName,
+          firstName: cmd.firstName,
+          displayName: getDisplayName(cmd),
+          email: cmd.email,
+          avatarUrl: undefined,
+          status: 'ACTIVE' as UserStatus,
+        },
+      })),
+      switchMap(({tokens, user}) => userWriteRepository.create(user).pipe(map(() => tokens))),
+    );
