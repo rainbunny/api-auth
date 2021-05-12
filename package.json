@@ -19,6 +19,7 @@
     "graphql": "^15.5.0",
     "graphql-fields": "^2.0.3",
     "graphql-type-json": "^0.3.2",
+    "helmet": "^4.6.0",
     "lodash": "^4.17.21",
     "pg": "^8.5.1",
     "querystring": "^0.2.1",
