@@ -1,0 +1,14 @@
+FROM node:14-alpine
+WORKDIR /app
+
+# restore pagackage first for better caching
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
+
+# make a dedicated node user for security
+RUN chown -R node:node /app
+USER node
+
+# run app
+EXPOSE 3000
+CMD yarn dev
