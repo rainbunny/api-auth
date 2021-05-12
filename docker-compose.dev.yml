@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   web:
-    image: gester/gapi-dev
+    image: rainbunny/auth-api
     build:
       context: .
       dockerfile: Dockerfile.dev
