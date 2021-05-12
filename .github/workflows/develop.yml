@@ -47,6 +47,9 @@ jobs:
       - name: Build
         run: yarn build
 
+      - name: Build
+        run: yarn build-docker
+
       - name: Slack Notification Finish
         uses: act10ns/slack@v1
         with:

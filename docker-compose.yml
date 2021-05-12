@@ -1,26 +1,8 @@
 version: '3.8'
 services:
   web:
-    image: gester/gapi
-    # env_file: .env
+    image: rainbunny/api-auth
+    env_file: .env
     build: .
     ports:
       - '3000:3000'
-  postgres:
-    image: postgres:13.2
-    restart: always
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    ports:
-      - '5432:5432'
-    volumes:
-      - ./docker-data/postgres:/var/lib/postgresql/data
-  pdadmin4:
-    image: dpage/pgadmin4:latest
-    restart: always
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=quangthinhtran3588@gmail.com
-      - PGADMIN_DEFAULT_PASSWORD=postgres
-    ports:
-      - '4000:80'
