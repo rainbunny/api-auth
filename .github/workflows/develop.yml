@@ -36,9 +36,6 @@ jobs:
           path: 'auth-credentials'
           ref: main
 
-      - name: Ls
-        run: ls
-
       - name: Copy credentials
         run: cp -R ./auth-credentials/environments/* ./environments
 
