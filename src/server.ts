@@ -6,7 +6,9 @@ import {configureServer} from './server.config';
 
 const {apolloServerConfig} = configureServer();
 const port = process.env.PORT || 3000;
-const server = express().use(helmet());
+const server = express().use(
+  helmet({contentSecurityPolicy: process.env.NODE_ENV === 'production' ? undefined : false}),
+);
 const apolloServer = new ApolloServer(apolloServerConfig);
 apolloServer.applyMiddleware({app: server});
 server.listen({port}, () =>

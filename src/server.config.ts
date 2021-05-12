@@ -80,7 +80,6 @@ export const configureServer = (): {apolloServerConfig: ApolloServerExpressConfi
     apolloServerConfig: {
       typeDefs: [baseTypeDefs, authTypeDefs],
       resolvers: _.mergeAll([baseResolvers(), authResolvers(container)]) as unknown as IResolvers,
-      playground: Boolean(true),
       introspection: Boolean(true),
       context: contextFactory({firebaseApp}),
     },
