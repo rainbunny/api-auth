@@ -26,7 +26,7 @@
     "rxjs": "^6.6.7",
     "yup": "^0.32.9"
   },
-  "description": "Template for API server with nodejs &amp; Graphql. The package is written in Typescript",
+  "description": "Api of auth service. The package is written in Typescript",
   "devDependencies": {
     "@babel/cli": "^7.13.14",
     "@babel/core": "^7.13.14",
@@ -71,6 +71,7 @@
   },
   "scripts": {
     "build": "rm -r -f dist && babel src --out-dir dist --extensions \".ts\" --source-maps inline --copy-files",
+    "build-docker": "docker-compose build",
     "dev": "yarn watch & nodemon -r dotenv/config --watch ./dist --nolazy ./dist/server.js",
     "execute": "yarn build && node -r dotenv/config ./dist/scripts/index.js",
     "lint": "prettier --check . && eslint . --ext .js,.jsx,.ts,.tsx && tsc --noEmit",
