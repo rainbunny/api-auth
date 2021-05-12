@@ -13,6 +13,20 @@ import {resolvers as authResolvers} from '@auth/graphql/resolvers';
 import {bootstrap as bootstrapAuth} from '@auth/bootstrap';
 import {version} from '../package.json';
 
+const logPool = (
+  message:
+    | string
+    | {
+        queryText: string;
+        params: unknown[];
+        duration: number;
+      },
+): void => {
+  if (typeof message !== 'string') {
+    log.info(message);
+  }
+};
+
 export const configureServer = (): {apolloServerConfig: ApolloServerExpressConfig; container: AwilixContainer} => {
   updateConfig({
     APP_NAME: process.env.APP_NAME || 'Auth Api',
@@ -29,11 +43,7 @@ export const configureServer = (): {apolloServerConfig: ApolloServerExpressConfi
     user: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
     ssl: Boolean(process.env.POSTGRES_SSL),
-    log: (message) => {
-      if (typeof message !== 'string') {
-        log.info(message);
-      }
-    },
+    log: logPool,
   })
     .on('error', (err) => log.error(err))
     .on('connect', () => log.info('Connected to write database'));
@@ -45,11 +55,7 @@ export const configureServer = (): {apolloServerConfig: ApolloServerExpressConfi
     user: process.env.REPLICA_POSTGRES_USER,
     password: process.env.REPLICA_POSTGRES_PASSWORD,
     ssl: Boolean(process.env.REPLICA_POSTGRES_SSL),
-    log: (message) => {
-      if (typeof message !== 'string') {
-        log.info(message);
-      }
-    },
+    log: logPool,
   })
     .on('error', (err) => log.error(err))
     .on('connect', () => log.info('Connected to read database'));
