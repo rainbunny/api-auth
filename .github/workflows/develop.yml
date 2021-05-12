@@ -34,8 +34,11 @@ jobs:
           repository: rainbunny/auth-credentials
           token: ${{ secrets.PAT }}
 
+      - name: Ls
+        run: ls
+
       - name: Copy credentials
-        run: cp -R auth-credentials/environments/* environments
+        run: cp -R ./auth-credentials/environments/* ./environments
 
       - name: Cache yarn
         uses: actions/cache@v2
