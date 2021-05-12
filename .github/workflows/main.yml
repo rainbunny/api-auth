@@ -48,6 +48,9 @@ jobs:
       - name: Restore package
         run: yarn
 
+      - name: Update build number
+        run: yarn execute update-build ${GITHUB_RUN_NUMBER}
+
       - name: Validate source code
         run: yarn validate
 
