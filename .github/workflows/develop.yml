@@ -29,10 +29,12 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Check out credentials
-        uses: actions/checkout@main
+        uses: actions/checkout@v2
         with:
           repository: rainbunny/auth-credentials
           token: ${{ secrets.PAT }}
+          path: 'auth-credentials'
+          ref: main
 
       - name: Ls
         run: ls
