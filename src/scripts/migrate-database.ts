@@ -64,7 +64,7 @@ const runMigration = ({
   let executor = of(undefined);
   if (mode === 'up') {
     versionFilePaths
-      .filter((versionFilePath, index) => index > currentVersionIndex)
+      .filter((_versionFilePath, index) => index > currentVersionIndex)
       .forEach((versionFilePath) => {
         executor = executor.pipe(
           tap(() => log.info(`Migrating up ${versionFilePath}...`)),

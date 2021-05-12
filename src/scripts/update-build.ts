@@ -5,11 +5,21 @@ export const updateBuild = (build: string = process.env.APP_BUILD_NO || ''): voi
     return;
   }
 
-  const replaceTasks: ReplaceStringTask[] = [];
+  const replaceTasks: ReplaceStringTask[] = [
+    {
+      src: `./src/server.config.ts`,
+      replaces: [
+        {
+          old: /BUILD: process.env.BUILD \|\| '.*',/,
+          new: `BUILD: process.env.BUILD || '${build}',`,
+        },
+      ],
+    },
+  ];
 
   runReplaceTasks(replaceTasks);
 };
 
-((): void => {
-  updateBuild(process.argv[2]);
-})();
+export const execute = (): void => {
+  updateBuild(process.argv[3]);
+};

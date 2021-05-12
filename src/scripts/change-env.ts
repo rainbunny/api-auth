@@ -1,19 +1,18 @@
 /* eslint-disable no-control-regex */
 import path from 'path';
 import fs from 'fs';
-import {ReplaceStringTask, runReplaceTasks} from './run-replace-tasks';
 
 interface CopyFileTask {
   src: string;
   des: string;
 }
 
-export const changeEnv = async (environment = 'production'): Promise<void> => {
+export const changeEnv = (environment = 'prod'): void => {
   const envFolder = `environments/${environment}`;
   const copyTasks: CopyFileTask[] = [
     {
-      src: path.resolve(__dirname, `../${envFolder}/.env.${environment}`),
-      des: path.resolve(__dirname, `.env`),
+      src: path.resolve(`./${envFolder}/${environment}.env`),
+      des: path.resolve(`./.env`),
     },
   ];
   copyTasks.forEach((copyTask) => {
@@ -24,22 +23,10 @@ export const changeEnv = async (environment = 'production'): Promise<void> => {
     // eslint-disable-next-line no-console
     console.log(`copied ${copyTask.src} \n to ${copyTask.des}`);
   });
-
-  const replaceTasks: ReplaceStringTask[] = [
-    // {
-    //   src: path.resolve(__dirname, `../android/app/build.gradle`),
-    //   replaces: [
-    //     {
-    //       old: /applicationId "[\w,.]*"/,
-    //       new: `applicationId "${config().android.id}"`,
-    //     },
-    //   ],
-    // },
-  ];
-
-  runReplaceTasks(replaceTasks);
+  // eslint-disable-next-line no-console
+  console.log(`changed environment to "${environment}}"`);
 };
 
-((): void => {
-  changeEnv(process.argv[2]);
-})();
+export const execute = (): void => {
+  changeEnv(process.argv[3]);
+};
