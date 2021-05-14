@@ -24,7 +24,7 @@ export const changeEnv = (environment = 'prod'): void => {
     console.log(`copied ${copyTask.src} \n to ${copyTask.des}`);
   });
   // eslint-disable-next-line no-console
-  console.log(`changed environment to "${environment}}"`);
+  console.log(`changed environment to "${environment}"`);
 };
 
 export const execute = (): void => {
