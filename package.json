@@ -78,6 +78,10 @@
     "lint-fix": "prettier --write . && eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "push": "git push && git push --tags",
     "test": "jest",
+    "k8s-config-map-dev": "kubectl create configmap auth-api-dev-config --from-env-file .env -o yaml --dry-run=client | kubectl apply -f -",
+    "k8s-config-map-prod": "kubectl create configmap auth-api-prod-config --from-env-file .env -o yaml --dry-run=client | kubectl apply -f -",
+    "k8s-deploy-dev": "kubectl apply -f k8s.deployment.dev.yaml",
+    "k8s-deploy-prod": "kubectl apply -f k8s.deployment.prod.yaml",
     "validate": "yarn lint && yarn test",
     "watch": "babel src --out-dir dist --extensions \".ts\" --source-maps inline --copy-files --watch"
   },
