@@ -2,3 +2,4 @@ coverage
 lib
 dist
 auth-credentials
+serverless
