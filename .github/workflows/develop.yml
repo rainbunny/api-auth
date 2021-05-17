@@ -75,7 +75,7 @@ jobs:
         run: |
           mkdir serverless
           cp -r ./package.json ./serverless/package.json
-          cp -r ./yarn.lock ./yarn.lock
+          cp -r ./yarn.lock ./serverless/yarn.lock
           cp -r ./node_modules ./serverless/node_modules
           cp -r ./dist ./serverless/dist
           cp -r ./.env ./serverless/.env
