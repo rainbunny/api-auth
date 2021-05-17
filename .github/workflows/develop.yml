@@ -73,6 +73,7 @@ jobs:
 
       - name: Deploy to lambda with serverless
         run: |
+          mkdir serverless
           cp -r ./package.json ./serverless/package.json
           cp -r ./yarn.lock ./yarn.lock
           cp -r ./node_modules ./serverless/node_modules
@@ -81,13 +82,6 @@ jobs:
           cp -r ./serverless.dev.yml ./serverless/serverless.yml
           cd serverless
           sls deploy
-        env:
-          SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
-
-      - name: Deploy to lambda with serverless
-        uses: serverless/github-action@master
-        with:
-          args: deploy
         env:
           SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
 
