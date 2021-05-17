@@ -27,6 +27,7 @@ provider:
   runtime: nodejs14.x
   lambdaHashingVersion: 20201221
   region: ap-southeast-1
+  stage: prod
 
 functions:
   graphql:
