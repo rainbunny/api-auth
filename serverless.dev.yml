@@ -31,8 +31,7 @@ provider:
 
 functions:
   graphql:
-    # this is formatted as <FILENAME>.<HANDLER>
-    handler: graphql.graphqlHandler
+    handler: dist/handler.graphqlHandler
     role: arn:aws:iam::482035452314:role/rainbunny-lambda
     events:
       - http:
