@@ -8,6 +8,7 @@
     "@rainbunny/pg-extensions": "^0.4.0",
     "apollo-server": "^2.23.0",
     "apollo-server-express": "^2.23.0",
+    "apollo-server-lambda": "^2.24.0",
     "awilix": "^4.3.3",
     "axios": "^0.21.1",
     "axios-observable": "^1.1.6",

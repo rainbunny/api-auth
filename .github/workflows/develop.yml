@@ -61,6 +61,9 @@ jobs:
       - name: Change environment
         run: yarn execute change-env dev
 
+      - name: Build
+        run: yarn build
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -68,12 +71,16 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Build & push Docker image
+      - name: Push to lambda with Serverless
         run: |
-          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin https://${{ secrets.AWS_PUBLIC_ECR }}
-          yarn build-docker
-          docker tag rainbunny/auth-api:latest ${{ secrets.AWS_PUBLIC_ECR }}/auth-api:dev
-          docker push ${{ secrets.AWS_PUBLIC_ECR }}/auth-api:dev
+          npm install -g serverless
+
+      # - name: Build & push Docker image
+      #   run: |
+      #     aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin https://${{ secrets.AWS_PUBLIC_ECR }}
+      #     yarn build-docker
+      #     docker tag rainbunny/auth-api:latest ${{ secrets.AWS_PUBLIC_ECR }}/auth-api:dev
+      #     docker push ${{ secrets.AWS_PUBLIC_ECR }}/auth-api:dev
 
       - name: Slack Notification Finish
         uses: act10ns/slack@v1
