@@ -79,11 +79,13 @@ jobs:
           cp -r ./node_modules ./serverless/node_modules
           cp -r ./dist ./serverless/dist
           cp -r ./.env ./serverless/.env
-          cp -r ./serverless.dev.yml ./serverless/serverless.yml
+          cp -r ./serverless.yml ./serverless/serverless.yml
           cd serverless
           npx serverless deploy
         env:
           SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+          STAGE: dev
+          AWS_REGION: ${{ secrets.AWS_REGION }}
 
       # - name: Build & push Docker image
       #   run: |
