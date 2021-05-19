@@ -73,6 +73,7 @@ jobs:
 
       - name: Deploy to lambda with serverless
         run: |
+          rm -r -f serverless
           mkdir serverless
           cp -r ./package.json ./serverless/package.json
           cp -r ./yarn.lock ./serverless/yarn.lock
