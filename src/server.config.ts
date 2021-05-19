@@ -1,12 +1,11 @@
 import type {IResolvers} from 'apollo-server';
-import type {ApolloServerExpressConfig} from 'apollo-server-express';
 import firebase from 'firebase/app';
 import {defaults} from 'pg';
 import {asValue, AwilixContainer, createContainer, InjectionMode} from 'awilix';
 import _ from 'lodash/fp';
 import * as firebaseAdmin from 'firebase-admin';
 import {RxPool} from '@rainbunny/pg-extensions';
-import {baseTypeDefs, baseResolvers, log, contextFactory, updateConfig} from '@core';
+import {baseTypeDefs, baseResolvers, log, updateConfig} from '@core';
 import {typeDefs as authTypeDefs} from '@auth/graphql/type-defs';
 import {resolvers as authResolvers} from '@auth/graphql/resolvers';
 import {bootstrap as bootstrapAuth} from '@auth/bootstrap';
@@ -26,7 +25,8 @@ const logPool = (
   }
 };
 
-export const configureServer = (): {apolloServerConfig: ApolloServerExpressConfig; container: AwilixContainer} => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const configureServer = (): {apolloServerConfig: any; container: AwilixContainer} => {
   updateConfig({
     APP_NAME: process.env.APP_NAME || 'Auth Api',
     VERSION: version,
@@ -82,7 +82,23 @@ export const configureServer = (): {apolloServerConfig: ApolloServerExpressConfi
       resolvers: _.mergeAll([baseResolvers(), authResolvers(container)]) as unknown as IResolvers,
       playground: Boolean(process.env.ENABLE_GRAPHQL_PLAYGROUND),
       introspection: Boolean(true),
-      context: contextFactory({firebaseApp}),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      context: ({req, event}: any): Promise<{user: any}> =>
+        firebaseApp
+          .auth()
+          .verifyIdToken((req || event).headers.authorization || '')
+          .then((decodedIdToken) =>
+            decodedIdToken.id
+              ? {
+                  user: {
+                    id: decodedIdToken.id,
+                    roles: decodedIdToken.roles,
+                    permissions: decodedIdToken.permissions,
+                  },
+                }
+              : {user: undefined},
+          )
+          .catch(() => ({user: undefined})),
     },
     container,
   };
