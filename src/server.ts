@@ -11,7 +11,4 @@ const server = express().use(
 );
 const apolloServer = new ApolloServer(apolloServerConfig);
 apolloServer.applyMiddleware({app: server});
-server.listen({port}, () =>
-  // eslint-disable-next-line no-console
-  log.info(`🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`),
-);
+server.listen({port}, () => log.info(`🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`));

@@ -1,5 +1,4 @@
 import {execute as initializeApp} from './initialize-app';
-import {execute as migrateDatabase} from './migrate-database';
 import {execute as changeEnv} from './change-env';
 import {execute as updateBuild} from './update-build';
 import {execute as demo} from './demo';
@@ -14,7 +13,6 @@ const execute = () => {
 
   const scripts = {
     'initialize-app': initializeApp,
-    'migrate-database': migrateDatabase,
     'change-env': changeEnv,
     'update-build': updateBuild,
     demo,
