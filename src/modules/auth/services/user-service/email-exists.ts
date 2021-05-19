@@ -1,6 +1,6 @@
-import type {UserReadRepository, UserService} from '@auth/interfaces';
 import {map} from 'rxjs/operators';
 import _ from 'lodash/fp';
+import type {UserReadRepository, UserService} from '@auth/interfaces';
 
 export const emailExists: (dependencies: {userReadRepository: UserReadRepository}) => UserService['emailExists'] =
   ({userReadRepository}) =>

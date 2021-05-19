@@ -1,5 +1,5 @@
-import type {UserReadRepository, UserService} from '@auth/interfaces';
 import {map} from 'rxjs/operators';
+import type {UserReadRepository, UserService} from '@auth/interfaces';
 
 export const usernameExists: (dependencies: {userReadRepository: UserReadRepository}) => UserService['usernameExists'] =
 

@@ -1,7 +1,6 @@
+import {convertSearchTerm} from '@core';
 import type {User, UserReadRepository, UserQuery} from '@auth/interfaces';
 import type {Database} from '@core';
-
-import {convertSearchTerm} from '@core';
 
 export const buildWhereClause = (filters: {searchTerm: string; username: string; email: string}): string => {
   let whereClause = '';

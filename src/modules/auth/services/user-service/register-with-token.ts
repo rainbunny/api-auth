@@ -1,11 +1,10 @@
-import type {UserService, UserWriteRepository, RegisterWithTokenCommand, SignInType, User} from '@auth/interfaces';
-
 import {ValidationError} from 'apollo-server';
 import * as yup from 'yup';
 import * as firebaseAdmin from 'firebase-admin';
 import {validateSchema} from '@core';
 import {from, of} from 'rxjs';
 import {catchError, switchMap} from 'rxjs/operators';
+import type {UserService, UserWriteRepository, RegisterWithTokenCommand, SignInType, User} from '@auth/interfaces';
 
 const INVALID_CREDENTIAL_MESSAGE = 'Invalid credential';
 

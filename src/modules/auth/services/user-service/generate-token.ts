@@ -1,5 +1,3 @@
-import type {UserService, UserWriteRepository, GenerateTokenCommand, User, UserReadRepository} from '@auth/interfaces';
-
 import {ValidationError} from 'apollo-server';
 import {filter} from 'lodash/fp';
 import * as firebaseAdmin from 'firebase-admin';
@@ -9,6 +7,7 @@ import * as yup from 'yup';
 import {from, Observable} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 import {validateSchema} from '@core';
+import type {UserService, UserWriteRepository, GenerateTokenCommand, User, UserReadRepository} from '@auth/interfaces';
 
 const schema = yup.object().shape({
   usernameOrEmail: yup.string().required(),

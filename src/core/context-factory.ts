@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type {AuthUser} from '@rainbunny/api-core';
 import * as firebaseAdmin from 'firebase-admin';
+import type {AuthUser} from '@rainbunny/api-core';
 
 export const contextFactory: (deps: {firebaseApp: firebaseAdmin.app.App}) => any =
   ({firebaseApp}) =>

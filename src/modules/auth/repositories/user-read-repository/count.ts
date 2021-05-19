@@ -1,7 +1,6 @@
+import {convertSearchTerm} from '@core';
 import type {UserQuery, UserReadRepository} from '@auth/interfaces';
 import type {Database} from '@core';
-
-import {convertSearchTerm} from '@core';
 import {buildWhereClause} from './find';
 
 export const count: (dependencies: {database: Database}) => UserReadRepository['count'] =

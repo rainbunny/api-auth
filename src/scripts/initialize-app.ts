@@ -1,10 +1,10 @@
-import type {Observable} from 'rxjs';
-import type {Database} from '@core';
-import type {User} from '@auth/interfaces';
 import * as firebaseAdmin from 'firebase-admin';
 import {from} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 import {log} from '@core';
+import type {User} from '@auth/interfaces';
+import type {Database} from '@core';
+import type {Observable} from 'rxjs';
 import {configureServer} from '../server.config';
 
 const getAdminUser = (database: Database): Observable<User> =>

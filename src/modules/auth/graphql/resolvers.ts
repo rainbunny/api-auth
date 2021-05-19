@@ -1,7 +1,7 @@
+import {convertHandlersToResolvers} from '@core';
 import type {Resolver} from '@core';
 import type {UserService} from '@auth/interfaces';
 import type {AwilixContainer} from 'awilix';
-import {convertHandlersToResolvers} from '@core';
 
 export const resolvers = (container: AwilixContainer): Resolver =>
   convertHandlersToResolvers({

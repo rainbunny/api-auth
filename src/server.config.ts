@@ -1,4 +1,3 @@
-import type {IResolvers} from 'apollo-server';
 import firebase from 'firebase/app';
 import {defaults} from 'pg';
 import {asValue, AwilixContainer, createContainer, InjectionMode} from 'awilix';
@@ -9,6 +8,7 @@ import {baseTypeDefs, baseResolvers, log, updateConfig} from '@core';
 import {typeDefs as authTypeDefs} from '@auth/graphql/type-defs';
 import {resolvers as authResolvers} from '@auth/graphql/resolvers';
 import {bootstrap as bootstrapAuth} from '@auth/bootstrap';
+import type {IResolvers} from 'apollo-server';
 import {version} from '../package.json';
 
 const logPool = (

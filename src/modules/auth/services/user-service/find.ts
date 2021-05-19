@@ -1,7 +1,6 @@
-import type {User, UserQuery, UserReadRepository, UserService} from '@auth/interfaces';
-
 import * as yup from 'yup';
 import {SEARCH_TERM_MAX_LENGTH, findOffsetQuery} from '@core';
+import type {User, UserQuery, UserReadRepository, UserService} from '@auth/interfaces';
 
 const querySchema = yup.object().shape({
   searchTerm: yup.string().max(SEARCH_TERM_MAX_LENGTH),

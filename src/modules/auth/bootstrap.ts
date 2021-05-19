@@ -1,6 +1,5 @@
-import type {AwilixContainer} from 'awilix';
-
 import {asFunction} from 'awilix';
+import type {AwilixContainer} from 'awilix';
 import {userReadRepositoryFactory, userWriteRepositoryFactory} from './repositories';
 import {userServiceFactory} from './services';
 
