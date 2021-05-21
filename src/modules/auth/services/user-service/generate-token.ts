@@ -1,4 +1,4 @@
-import {ValidationError} from 'apollo-server';
+import {ValidationError} from 'apollo-server-core';
 import {filter} from 'lodash/fp';
 import * as firebaseAdmin from 'firebase-admin';
 import firebase from 'firebase';

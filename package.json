@@ -7,6 +7,7 @@
     "@rainbunny/api-core": "^0.3.0",
     "@rainbunny/pg-extensions": "^0.5.0",
     "apollo-server": "^2.24.1",
+    "apollo-server-core": "^2.24.1",
     "apollo-server-express": "^2.24.1",
     "apollo-server-lambda": "^2.24.1",
     "awilix": "^4.3.4",

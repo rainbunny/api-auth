@@ -8,7 +8,6 @@ import {baseTypeDefs, baseResolvers, log, updateConfig} from '@core';
 import {typeDefs as authTypeDefs} from '@auth/graphql/type-defs';
 import {resolvers as authResolvers} from '@auth/graphql/resolvers';
 import {bootstrap as bootstrapAuth} from '@auth/bootstrap';
-import type {IResolvers} from 'apollo-server';
 import {version} from '../package.json';
 
 const logPool = (
@@ -79,7 +78,7 @@ export const configureServer = (): {apolloServerConfig: any; container: AwilixCo
   return {
     apolloServerConfig: {
       typeDefs: [baseTypeDefs, authTypeDefs],
-      resolvers: _.mergeAll([baseResolvers(), authResolvers(container)]) as unknown as IResolvers,
+      resolvers: _.mergeAll([baseResolvers(), authResolvers(container)]),
       playground: Boolean(process.env.ENABLE_GRAPHQL_PLAYGROUND),
       introspection: Boolean(true),
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
