@@ -28,6 +28,7 @@ provider:
   lambdaHashingVersion: 20201221
   region: ${env:AWS_REGION}
   stage: ${env:STAGE}
+  minimumCompressionSize: 512
 
 functions:
   graphql:
