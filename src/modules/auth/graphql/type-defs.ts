@@ -1,4 +1,4 @@
-import {gql} from 'apollo-server-core';
+import {gql} from 'apollo-server';
 
 export const typeDefs = gql`
   extend type Query {

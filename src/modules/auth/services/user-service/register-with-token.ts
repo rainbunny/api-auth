@@ -1,4 +1,4 @@
-import {ValidationError} from 'apollo-server-core';
+import {ValidationError} from 'apollo-server';
 import * as yup from 'yup';
 import * as firebaseAdmin from 'firebase-admin';
 import {validateSchema} from '@core';
