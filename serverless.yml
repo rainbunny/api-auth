@@ -34,7 +34,7 @@ provider:
 functions:
   graphql:
     handler: dist/handler.graphqlHandler
-    memorySize: 512 # memory size of lambda function
+    memorySize: 256 # memory size of lambda function
     events:
       - http:
           path: graphql
