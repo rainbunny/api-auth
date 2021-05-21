@@ -70,7 +70,10 @@ export const execute = (): void => {
         from(firebaseAdmin.auth().setCustomUserClaims(firebaseUser.uid, {id: admin.id})),
       ),
     )
-    .subscribe(() => {
-      log.info('Initialized admin user');
-    }, log.error.bind(log));
+    .subscribe({
+      complete: () => {
+        log.info('Initialized admin user');
+      },
+      error: (e) => log.error(e),
+    });
 };
