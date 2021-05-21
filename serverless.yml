@@ -34,6 +34,7 @@ provider:
 functions:
   graphql:
     handler: dist/handler.graphqlHandler
+    memorySize: 512 # memory size of lambda function
     events:
       - http:
           path: graphql
@@ -62,3 +63,11 @@ functions:
       REPLICA_POSTGRES_SSL: ${env:REPLICA_POSTGRES_SSL}
       FIREBASE_CREDENTIAL: ${env:FIREBASE_CREDENTIAL}
       FIREBASE_CLIENT_CONFIG: ${env:FIREBASE_CLIENT_CONFIG}
+
+plugins:
+  - serverless-prune-plugin
+
+custom:
+  prune:
+    automatic: true
+    number: 3

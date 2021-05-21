@@ -55,6 +55,7 @@
     "nodemon": "^2.0.7",
     "prettier": "2.3.0",
     "serverless": "^2.41.2",
+    "serverless-prune-plugin": "^1.5.0",
     "typescript": "^4.2.4"
   },
   "homepage": "https://github.com/rainbunny/auth-api#readme",
