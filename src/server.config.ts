@@ -4,11 +4,10 @@ import {asValue, AwilixContainer, createContainer, InjectionMode} from 'awilix';
 import _ from 'lodash/fp';
 import * as firebaseAdmin from 'firebase-admin';
 import {RxPool} from '@rainbunny/pg-extensions';
-import {baseTypeDefs, baseResolvers, log, updateConfig} from '@core';
+import {baseTypeDefs, baseResolvers, log, updateConfig, contextFactory} from '@core';
 import {typeDefs as authTypeDefs} from '@auth/graphql/type-defs';
 import {resolvers as authResolvers} from '@auth/graphql/resolvers';
 import {bootstrap as bootstrapAuth} from '@auth/bootstrap';
-import type {IResolvers} from 'apollo-server';
 import {version} from '../package.json';
 
 const logPool = (
@@ -79,26 +78,11 @@ export const configureServer = (): {apolloServerConfig: any; container: AwilixCo
   return {
     apolloServerConfig: {
       typeDefs: [baseTypeDefs, authTypeDefs],
-      resolvers: _.mergeAll([baseResolvers(), authResolvers(container)]) as unknown as IResolvers,
+      resolvers: _.mergeAll([baseResolvers(), authResolvers(container)]),
       playground: Boolean(process.env.ENABLE_GRAPHQL_PLAYGROUND),
       introspection: Boolean(true),
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      context: ({req, event}: any): Promise<{user: any}> =>
-        firebaseApp
-          .auth()
-          .verifyIdToken((req || event).headers.authorization || '')
-          .then((decodedIdToken) =>
-            decodedIdToken.id
-              ? {
-                  user: {
-                    id: decodedIdToken.id,
-                    roles: decodedIdToken.roles,
-                    permissions: decodedIdToken.permissions,
-                  },
-                }
-              : {user: undefined},
-          )
-          .catch(() => ({user: undefined})),
+      context: contextFactory({firebaseApp}),
     },
     container,
   };
