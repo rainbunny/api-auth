@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {contextFactory} from '@core';
 
+const authWithError = () => ({
+  verifyIdToken: async () => {
+    throw new Error();
+  },
+});
+
 describe('contextFactory', () => {
   it('returns context correctly', async () => {
     const user = {
@@ -68,7 +74,7 @@ describe('contextFactory', () => {
         }),
       },
     };
-    const context = await (contextFactory(dependencies as any) as any)({req: {headers: {authorization: 'token'}}});
+    const context = await contextFactory(dependencies as any)({req: {headers: {authorization: 'token'}}});
     expect(context).toMatchInlineSnapshot(`
       Object {
         "user": undefined,
@@ -79,14 +85,10 @@ describe('contextFactory', () => {
   it('returns context with no user if decoding not successfully', async () => {
     const dependencies = {
       firebaseApp: {
-        auth: () => ({
-          verifyIdToken: async () => {
-            throw new Error();
-          },
-        }),
+        auth: authWithError,
       },
     };
-    const context = await (contextFactory(dependencies as any) as any)({req: {headers: {authorization: 'token'}}});
+    const context = await contextFactory(dependencies as any)({req: {headers: {authorization: 'token'}}});
     expect(context).toMatchInlineSnapshot(`
       Object {
         "user": undefined,
@@ -97,14 +99,10 @@ describe('contextFactory', () => {
   it('returns context with no user if there is no token', async () => {
     const dependencies = {
       firebaseApp: {
-        auth: () => ({
-          verifyIdToken: async () => {
-            throw new Error();
-          },
-        }),
+        auth: authWithError,
       },
     };
-    const context = await (contextFactory(dependencies as any) as any)({req: {headers: {authorization: ''}}});
+    const context = await contextFactory(dependencies as any)({req: {headers: {authorization: ''}}});
     expect(context).toMatchInlineSnapshot(`
       Object {
         "user": undefined,
