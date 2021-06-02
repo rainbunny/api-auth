@@ -30,7 +30,7 @@ jobs:
       - name: Check out credentials
         uses: actions/checkout@v2
         with:
-          repository: rainbunny/auth-credentials
+          repository: thinhtran3588/auth-credentials
           token: ${{ secrets.PAT }}
           path: 'auth-credentials'
           ref: main

@@ -31,7 +31,7 @@ jobs:
       - name: Check out credentials
         uses: actions/checkout@v2
         with:
-          repository: rainbunny/auth-credentials
+          repository: thinhtran3588/auth-credentials
           token: ${{ secrets.PAT }}
           path: 'auth-credentials'
           ref: main
@@ -92,7 +92,7 @@ jobs:
       #   run: |
       #     aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin https://${{ secrets.AWS_PUBLIC_ECR }}
       #     yarn build-docker
-      #     docker tag rainbunny/auth-api:latest ${{ secrets.AWS_PUBLIC_ECR }}/auth-api:dev
+      #     docker tag thinhtran3588/auth-api:latest ${{ secrets.AWS_PUBLIC_ECR }}/auth-api:dev
       #     docker push ${{ secrets.AWS_PUBLIC_ECR }}/auth-api:dev
 
       - name: Slack Notification Finish
