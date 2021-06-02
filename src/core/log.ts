@@ -1,5 +1,5 @@
 import bunyan from 'bunyan';
-import {config} from '@rainbunny/api-core';
+import {config} from '@tqt/api-core';
 
 const log = bunyan.createLogger({
   name: config().APP_NAME,

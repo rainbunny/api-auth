@@ -3,7 +3,7 @@ import {defaults} from 'pg';
 import {asValue, AwilixContainer, createContainer, InjectionMode} from 'awilix';
 import _ from 'lodash/fp';
 import * as firebaseAdmin from 'firebase-admin';
-import {RxPool} from '@rainbunny/pg-extensions';
+import {RxPool} from '@tqt/pg-extensions';
 import {baseTypeDefs, baseResolvers, log, updateConfig, contextFactory} from '@core';
 import {typeDefs as authTypeDefs, resolvers as authResolvers} from '@auth/graphql';
 import {bootstrap as bootstrapAuth} from '@auth/bootstrap';
