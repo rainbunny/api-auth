@@ -37,7 +37,10 @@ jobs:
           ref: main
 
       - name: Copy credentials
-        run: cp -R ./auth-credentials/environments/* ./environments
+        run: |
+          cp -R ./auth-credentials/environments/* ./environments
+          cd environments
+          ls
 
       - name: Cache yarn
         uses: actions/cache@v2
