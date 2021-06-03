@@ -40,7 +40,7 @@ jobs:
         run: |
           cp -R ./auth-credentials/environments/* ./environments
           cd environments
-          ls
+          ls -a
 
       - name: Cache yarn
         uses: actions/cache@v2
@@ -63,7 +63,7 @@ jobs:
 
       - name: Migrate database
         run: |
-          ls
+          ls -a
           yarn pg-migrate up
 
       - name: Build
