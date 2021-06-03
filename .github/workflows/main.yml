@@ -76,6 +76,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Migrate database
+        run: yarn pg-migrate up
+
       - name: Deploy to lambda with serverless
         run: |
           rm -r -f serverless

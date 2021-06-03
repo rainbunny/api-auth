@@ -27,6 +27,6 @@ export const find: (dependencies: {database: Database}) => UserReadRepository['f
         username,
         email,
       },
-      fields: Object.keys(fields),
+      fields: Object.keys(fields.data),
       ...other,
     });
