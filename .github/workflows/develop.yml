@@ -59,9 +59,7 @@ jobs:
         run: yarn execute change-env dev
 
       - name: Migrate database
-        run: |
-          . ./.env
-          npx pg-migrate up
+        run: set -o allexport;. ./.env;set +o allexport;npx pg-migrate up
 
       - name: Build
         run: yarn build
