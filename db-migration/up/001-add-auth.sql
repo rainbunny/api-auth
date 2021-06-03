@@ -132,8 +132,8 @@ VALUES(
         'admin',
         'SYSTEM',
         'admin',
-        'Admin',
         'Super',
+        'Admin',
         'Super Admin',
         'ACTIVE'
     );
