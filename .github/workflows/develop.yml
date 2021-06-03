@@ -61,7 +61,7 @@ jobs:
       - name: Migrate database
         run: |
           . ./.env
-          npm pg-migrate up
+          npx pg-migrate up
 
       - name: Build
         run: yarn build
