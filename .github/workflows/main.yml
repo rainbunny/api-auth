@@ -70,7 +70,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Migrate database
-        run: yarn pg-migrate up
+        run: set -o allexport;. ./.env;set +o allexport;npx pg-migrate up
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
