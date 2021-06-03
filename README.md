@@ -23,3 +23,32 @@ Api of auth service.
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=thinhtran3588_auth-api&branch=develop&metric=alert_status)](https://sonarcloud.io/dashboard?id=thinhtran3588_auth-api&branch=develop)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=thinhtran3588_auth-api&branch=develop&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=thinhtran3588_auth-api&branch=develop)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=thinhtran3588_auth-api&branch=develop&metric=security_rating)](https://sonarcloud.io/dashboard?id=thinhtran3588_auth-api&branch=develop)
+
+## How to install
+
+1. Restore packages
+
+   ```bash
+   yarn
+
+   ```
+
+2. Put `prod.env` into `environments/prod`. Or you may use another env file for another environment.
+
+3. Update environment
+
+   ```bash
+   yarn execute change-env prod
+   ```
+
+4. Migrate database
+
+   ```bash
+   yarn pg-migrate up
+   ```
+
+5. Initialize app, create `admin` user
+
+   ```bash
+   yarn execute initialize-app
+   ```
