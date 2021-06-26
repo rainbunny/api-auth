@@ -2,8 +2,6 @@ import {ValidationError} from 'apollo-server-core';
 import * as yup from 'yup';
 import * as firebaseAdmin from 'firebase-admin';
 import {validateSchema} from '@core';
-import {from, of} from 'rxjs';
-import {catchError, switchMap} from 'rxjs/operators';
 import type {UserService, UserWriteRepository, RegisterWithTokenCommand, SignInType, User} from '@auth/interfaces';
 
 const INVALID_CREDENTIAL_MESSAGE = 'Invalid credential';
@@ -46,24 +44,21 @@ const convertToUser = (user: firebaseAdmin.auth.UserRecord): Omit<User, 'id'> =>
 };
 
 const createUser = (userData: firebaseAdmin.auth.DecodedIdToken, userWriteRepository: UserWriteRepository) =>
-  from(
-    firebaseAdmin
-      .auth()
-      .getUser(userData.uid)
-      .then(convertToUser)
-      .then(userWriteRepository.create)
-      .then((id) => firebaseAdmin.auth().setCustomUserClaims(userData.uid, {id})),
-  );
+  firebaseAdmin
+    .auth()
+    .getUser(userData.uid)
+    .then(convertToUser)
+    .then(userWriteRepository.create)
+    .then((id) => firebaseAdmin.auth().setCustomUserClaims(userData.uid, {id}));
 
 export const registerWithToken: (dependencies: {
   userWriteRepository: UserWriteRepository;
 }) => UserService['registerWithToken'] =
   ({userWriteRepository}) =>
   (command: RegisterWithTokenCommand) =>
-    validateSchema<RegisterWithTokenCommand>(schema)(command).pipe(
-      switchMap(({token}) => from(firebaseAdmin.auth().verifyIdToken(token))),
-      catchError(() => {
+    validateSchema<RegisterWithTokenCommand>(schema)(command)
+      .then(({token}) => firebaseAdmin.auth().verifyIdToken(token))
+      .catch(() => {
         throw new ValidationError(INVALID_CREDENTIAL_MESSAGE);
-      }),
-      switchMap((userData) => (userData.id ? of<void>() : createUser(userData, userWriteRepository))),
-    );
+      })
+      .then((userData) => (userData.id ? Promise.resolve() : createUser(userData, userWriteRepository)));

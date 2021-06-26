@@ -2,8 +2,6 @@ import * as firebaseAdmin from 'firebase-admin';
 import firebase from 'firebase';
 import 'firebase/auth';
 import * as yup from 'yup';
-import {from} from 'rxjs';
-import {map, switchMap} from 'rxjs/operators';
 import {validateSchema, ValidationError} from '@core';
 import {getDisplayName} from '@auth/helpers';
 import type {
@@ -38,31 +36,29 @@ const schema = yup.object().shape({
 });
 
 const createFirebaseUser = (command: RegisterCommand) =>
-  from(
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(command.email, command.password)
-      .then(async (credential) => {
-        const accessToken = await credential.user.getIdToken();
-        await credential.user.updateProfile({
-          displayName: getDisplayName(command),
-        });
-        return {
-          uid: credential.user?.uid,
-          refreshToken: credential.user.refreshToken,
-          accessToken,
-        };
-      })
-      .then(({uid, accessToken, refreshToken}) =>
-        firebaseAdmin
-          .auth()
-          .createCustomToken(uid)
-          .then((loginToken) => ({uid, loginToken, accessToken, refreshToken})),
-      )
-      .catch(() => {
-        throw new ValidationError('An account with this email already exists');
-      }),
-  );
+  firebase
+    .auth()
+    .createUserWithEmailAndPassword(command.email, command.password)
+    .then(async (credential) => {
+      const accessToken = await credential.user.getIdToken();
+      await credential.user.updateProfile({
+        displayName: getDisplayName(command),
+      });
+      return {
+        uid: credential.user?.uid,
+        refreshToken: credential.user.refreshToken,
+        accessToken,
+      };
+    })
+    .then(({uid, accessToken, refreshToken}) =>
+      firebaseAdmin
+        .auth()
+        .createCustomToken(uid)
+        .then((loginToken) => ({uid, loginToken, accessToken, refreshToken})),
+    )
+    .catch(() => {
+      throw new ValidationError('An account with this email already exists');
+    });
 
 export const register: (dependencies: {
   userWriteRepository: UserWriteRepository;
@@ -70,41 +66,32 @@ export const register: (dependencies: {
 }) => UserService['register'] =
   ({userWriteRepository, userReadRepository}) =>
   (command: RegisterCommand) =>
-    validateSchema<typeof command>(schema)(command).pipe(
-      switchMap((cmd) =>
-        emailExists({userReadRepository})({email: command.email}, undefined).pipe(
-          map((doesEmailExist) => {
-            if (doesEmailExist) {
-              throw new ValidationError('An account with this email already exists');
-            }
-            return cmd;
-          }),
-        ),
-      ),
-      switchMap((cmd) =>
-        usernameExists({userReadRepository})({username: command.username}, undefined).pipe(
-          map((doesUsernameExist) => {
-            if (doesUsernameExist) {
-              throw new ValidationError('An account with this username already exists');
-            }
-            return cmd;
-          }),
-        ),
-      ),
-      switchMap((cmd) => createFirebaseUser(cmd).pipe(map((tokens) => ({tokens, cmd})))),
-      map(({tokens, cmd}) => ({
+    validateSchema<typeof command>(schema)(command)
+      .then(() => emailExists({userReadRepository})({email: command.email}, undefined))
+      .then((doesEmailExist) => {
+        if (doesEmailExist) {
+          throw new ValidationError('An account with this email already exists');
+        }
+      })
+      .then(() => usernameExists({userReadRepository})({username: command.username}, undefined))
+      .then((doesUsernameExist) => {
+        if (doesUsernameExist) {
+          throw new ValidationError('An account with this username already exists');
+        }
+      })
+      .then(() => createFirebaseUser(command))
+      .then((tokens) => ({
         tokens,
         user: {
           signInType: 'EMAIL' as SignInType,
-          signInId: cmd.email,
+          signInId: command.email,
           externalId: tokens.uid,
-          lastName: cmd.lastName,
-          firstName: cmd.firstName,
-          displayName: getDisplayName(cmd),
-          email: cmd.email,
+          lastName: command.lastName,
+          firstName: command.firstName,
+          displayName: getDisplayName(command),
+          email: command.email,
           avatarUrl: undefined,
           status: 'ACTIVE' as UserStatus,
         },
-      })),
-      switchMap(({tokens, user}) => userWriteRepository.create(user).pipe(map(() => tokens))),
-    );
+      }))
+      .then(({tokens, user}) => userWriteRepository.create(user).then(() => tokens));

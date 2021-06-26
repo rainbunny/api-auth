@@ -1,4 +1,3 @@
-import {map} from 'rxjs/operators';
 import type {UserReadRepository, UserService} from '@auth/interfaces';
 
 export const usernameExists: (dependencies: {userReadRepository: UserReadRepository}) => UserService['usernameExists'] =
@@ -10,4 +9,4 @@ export const usernameExists: (dependencies: {userReadRepository: UserReadReposit
           username,
           fields: {id: {}, externalId: {}, username: {}, signInType: {}},
         })
-        .pipe(map((users) => users.length > 0));
+        .then((users) => users.length > 0);
