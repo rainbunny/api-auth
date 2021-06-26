@@ -87,5 +87,5 @@
     "watch": "babel src --out-dir dist --extensions \".ts\" --source-maps inline --copy-files --watch"
   },
   "types": "dist/index.d.ts",
-  "version": "0.2.0"
+  "version": "0.3.0"
 }
