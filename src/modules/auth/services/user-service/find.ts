@@ -9,4 +9,8 @@ const querySchema = yup.object().shape({
 export const find: (dependencies: {userReadRepository: UserReadRepository}) => UserService['find'] =
   ({userReadRepository}) =>
   (query) =>
-    findOffsetQuery<string, User, UserQuery>({query, querySchema, repository: userReadRepository});
+    findOffsetQuery<string, User, UserQuery>({
+      query: {...query, fields: query.fields.data},
+      querySchema,
+      repository: userReadRepository,
+    });
