@@ -74,7 +74,7 @@
   "scripts": {
     "build": "rm -r -f dist && babel src --out-dir dist --extensions \".ts\" --source-maps inline --copy-files",
     "build-docker": "docker-compose build",
-    "dev": "yarn watch & nodemon -r dotenv/config --watch ./dist --nolazy ./dist/server.js",
+    "dev": "yarn watch & NODE_ENV=develop nodemon -r dotenv/config --watch ./dist --nolazy ./dist/server.js",
     "execute": "yarn build && node -r dotenv/config ./dist/scripts/index.js",
     "lint": "prettier --check . && eslint . --ext .js,.jsx,.ts,.tsx && tsc --noEmit",
     "lint-fix": "prettier --write . && eslint . --ext .js,.jsx,.ts,.tsx --fix",
